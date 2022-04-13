@@ -58,22 +58,33 @@ all_min = meineDaten['Verbrauch (kWh)'].min()
 groupby_mean = meineDaten.groupby(['Ladepunkt']).mean()
 groupby_max = meineDaten.groupby(['Ladepunkt']).max()
 groupby_min = meineDaten.groupby(['Ladepunkt']).min()
-groupby_month_mean = meineDaten.groupby(pd.Grouper(key='Gestartet',freq='Y')).sum()
+groupby_month_mean = meineDaten.groupby(pd.Grouper(key='Gestartet',freq='M')).mean()
 groupby_month_max = meineDaten.groupby(pd.Grouper(key='Gestartet',freq='M')).max()
 groupby_month_min = meineDaten.groupby(pd.Grouper(key='Gestartet',freq='M')).min()
 
-
-print("\nGeringster Verbrauch aller Zeiten, aller Säulen:\n",all_min, "kWh")
-print("\nHöchster Verbrauch aller Zeiten, aller Säulen:\n",all_max, "kWh")
+print("\nGeringster Verbrauch aller Säulen in der gesamten Zeit:\n",all_min, "kWh")
+print("\nHöchster Verbrauch aller Säulen in der gesamten Zeit:\n",all_max, "kWh")
 print("\nMittlerer Verbrauch aller Säulen in der gesamten Zeit:\n",all_mean, "kWh")
-print("\nHöchster Verbrauch aller Zeiten pro Säule:\n",groupby_max['Verbrauch (kWh)'])
-print("\nGeringster Verbrauch aller Zeiten pro Säule:\n",groupby_min['Verbrauch (kWh)'])
-print("\nMittlerer Verbrauch pro Säule in der Gesamtzeit:\n",groupby_mean['Verbrauch (kWh)'])
-print("\nMonatlicher Mittelwert:",groupby_month_mean['Verbrauch (kWh)'])
-print("\nMonatlicher Maximalwert:",groupby_month_max['Verbrauch (kWh)'])
-print("\nMonatlicher Mindestwert:",groupby_month_min['Verbrauch (kWh)'])
+print("\nHöchster Verbrauch pro Säule in der gesamten Zeit:\n",groupby_max['Verbrauch (kWh)'])
+print("\nGeringster Verbrauch pro Säule in der gesamten Zeit:\n",groupby_min['Verbrauch (kWh)'])
+print("\nMittlerer Verbrauch pro Säule in der gesamten Zeit:\n",groupby_mean['Verbrauch (kWh)'])
 
+print("\nMonatlicher Mindestwert:\n",groupby_month_min['Verbrauch (kWh)'])
+print("\nMonatlicher Maximalwert:\n",groupby_month_max['Verbrauch (kWh)'])
+print("\nMonatlicher Mittelwert:\n",groupby_month_mean['Verbrauch (kWh)']) 
 
-#sns.set_theme(style="whitegrid")
-#sns.histplot(groupby_mean, x="Ladepunkt",y="Verbrauch (kWh)")
-#plt.show()
+test = pd.DataFrame(
+    {
+        "Uhrzeit": meineDaten["Gestartet"],
+        "Ladepunkt": meineDaten["Ladepunkt"],
+        "Verbrauch": meineDaten["Verbrauch (kWh)"]
+    }
+)
+  
+# show df
+print(test)
+  
+# applying the groupby function on df
+test.sort_values(by=['Ladepunkt','Uhrzeit'], inplace=True)
+
+print (test)
