@@ -10,16 +10,17 @@ class plotten():
     '''
     Diese Klasse soll auf Basis einer Tabelle Graphen plotten.
     '''
-    def __init__(self, daten, name, jahr, monat, woche):
+    def __init__(self, daten, name, start, ende):
         self.daten = daten
         self.name = name
-        self.jahr = jahr
-        self.monat = monat
-        self.woche = woche
-    def ausgeben(self):
+        self.start = start
+        self.ende = ende
+    def gesamtverbrauch(self):
         plt.figure()
-        df[df[column=0].dt.strftime('%Y-%m-%d') == self.jahr + '-' + self.monat]
-        sns.lineplot(data = self.daten, label =self.name)
+        sns.set_theme()
+
+        tabelle = self.daten[self.start :self.ende]
+        sns.lineplot(data = tabelle, label =self.name, marker = "o")
         plt.xticks(rotation = 25)
         
 df= pd.read_csv("Alle-ladevorgänge-2022-03-16.csv", sep=";",encoding='latin-1',decimal=",")
@@ -55,13 +56,9 @@ print("\nTagersverbrauch:\n",tagesverbrauch)
 wochenverbrauch = df["Verbrauch (kWh)"].resample("W").sum() #Gibt den Wochenverbrauch aus
 print("\nWochenverbauch:\n",wochenverbrauch)
 
-#%matplotlib inline
-gesamtzeit_tagesverbrauch = plotten(tagesverbrauch,"Täglicher Gesamtverbrauch",2020,10,0)
-gesamtzeit_tagesverbrauch.ausgeben()
 
-gesamtzeit_wochenverbrauch = plotten(wochenverbrauch,"Wöchentlicher Gesamtverbrauch",0,0,0)
-gesamtzeit_wochenverbrauch.ausgeben()
+gesamtzeit_tagesverbrauch = plotten(tagesverbrauch,"Täglicher Gesamtverbrauch","2021-01-10","2021-01-17")
+gesamtzeit_tagesverbrauch.gesamtverbrauch()
 
-
-#df["Tagesverbrauch"]= df["Verbrauch (kWh)"].resample("D").sum() Funktioniert noch nicht
-#df["Wochenverbrauch"]=df["Verbrauch (kWh)"].resample("W").sum() Funktioniert noch nicht
+gesamtzeit_wochenverbrauch = plotten(wochenverbrauch,"Wöchentlicher Gesamtverbrauch","2020-01-01","2021-01-01")
+gesamtzeit_wochenverbrauch.gesamtverbrauch()
