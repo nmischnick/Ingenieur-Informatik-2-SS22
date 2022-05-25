@@ -18,7 +18,9 @@ class plotten():
         
     def gesamtverbrauch_tag(self):
         tagesverbrauch = self.daten["Verbrauch (kWh)"].resample("D").sum() #Gibt den Tagesverbrauch aus
+        test = tagesverbrauch.mean()
         print("HIER GEHT DAS DATUM KAPUTT:", tagesverbrauch)
+        print("HIER GEHT DAS DATUM KAPUTT:", test)
         plt.figure()
         sns.set_theme()
         tabelle = tagesverbrauch[self.start :self.ende]
@@ -34,7 +36,6 @@ class plotten():
         plt.xticks(rotation = 25)
     
     def verbrauchstandorte(self):
-        print(df)
         plt.figure()
         sns.set_theme()
         plt.xticks(rotation = 25)
@@ -114,7 +115,7 @@ df.set_index("Date", inplace = True)
 print("HIER IST ES NOCH IN ORDNUNG:",df)
 
 
-gesamtzeit_tagesverbrauch = plotten(df,"Täglicher Gesamtverbrauch","2021-01-10","2021-01-17")
+gesamtzeit_tagesverbrauch = plotten(df,"Täglicher Gesamtverbrauch","2021-01-10","2024-01-17")
 gesamtzeit_tagesverbrauch.gesamtverbrauch_tag()
 
 gesamtzeit_wochenverbrauch = plotten(df,"Wöchentlicher Gesamtverbrauch","2021-01-01","2021-02-01")
