@@ -44,11 +44,14 @@ def get_one(ladepunkt):
     
     print('Calculating Data For: ', ladepunkt)
     
-    df_lp = df[df['Ladepunkt'] == ladepunkt]                #aus DataFrame nur Werte der gegebenen Ladesäule
+    if ladepunkt == 'all':
+        df_lp = df
+    else:
+        df_lp = df[df['Ladepunkt'] == ladepunkt]                #aus DataFrame nur Werte der gegebenen Ladesäule
     
     print('Anzahl Ladevorgänge: ', len(df_lp))              #Ausgabe Anzahl Ladevorgänge, da bei wenigen Ladevorgängen Diagramm nicht wirklich sinnvoll ist
 
-    print(df_lp)
+    #print(df_lp)
 
     df_lp['nextfullhour'] = df_lp['start'].dt.ceil('h')     #auf nächste volle Stunde setzten. 'h' = hour
     
@@ -102,26 +105,26 @@ def plot_all():
         
         data = get_one(i)
         
-        print(data)
+        #print(data)
     
         fig, ax = plt.subplots(figsize = (20, 7))
     
         sns.despine(bottom = True, left = True)
-        sns.barplot(ax=ax, x=data.index, y='difftest', data=data, errwidth=0, ci=None).set_title(ladepunkt)
+        sns.barplot(ax=ax, x=data.index, y='difftest', data=data, errwidth=0, ci=None).set_title(i)
 
 
 # -------------------- gibt Diagramm zu einem Ladepunkt aus
 def plot_one(ladepunkt):
     data = get_one(ladepunkt)
     
-    print(data)
+    #print(data)
 
     fig, ax = plt.subplots(figsize = (20, 7))
 
     sns.despine(bottom = True, left = True)
     sns.barplot(ax=ax, x=data.index, y='difftest', data=data, errwidth=0).set_title(ladepunkt)
     
-plot_one('DE*cem*E740796*002')
-    
+plot_one('all')
 
-    
+
+
