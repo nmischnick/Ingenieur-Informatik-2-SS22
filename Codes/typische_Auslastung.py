@@ -107,7 +107,7 @@ def plot_all():
         fig, ax = plt.subplots(figsize = (20, 7))
     
         sns.despine(bottom = True, left = True)
-        sns.barplot(ax=ax, x=data.index, y='difftest', data=data, errwidth=0, ci=None)
+        sns.barplot(ax=ax, x=data.index, y='difftest', data=data, errwidth=0, ci=None).set_title(ladepunkt)
 
 
 # -------------------- gibt Diagramm zu einem Ladepunkt aus
@@ -119,7 +119,7 @@ def plot_one(ladepunkt):
     fig, ax = plt.subplots(figsize = (20, 7))
 
     sns.despine(bottom = True, left = True)
-    sns.barplot(ax=ax, x=data.index, y='difftest', data=data, errwidth=0)
+    sns.barplot(ax=ax, x=data.index, y='difftest', data=data, errwidth=0).set_title(ladepunkt)
     
 plot_one('DE*cem*E740796*002')
     
